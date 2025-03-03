@@ -3,15 +3,9 @@ import os
 API_ID = 2530547
 API_HASH = '064b65866cd134e579424153177701dd'
 
-
-MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 3306))
-MYSQL_HOST = os.environ.get('MYSQL_HOST', 'mysql')
-
-MYSQL_USER = os.environ.get('MYSQL_USER', 'root')
-MYSQL_ENGINE = os.environ['MYSQL_ENGINE']
-MYSQL_DATABASE = os.environ['MYSQL_DATABASE']
-MYSQL_ROOT_PASSWORD = os.environ['MYSQL_ROOT_PASSWORD']
-
+# Database configuration
+DATABASE_TYPE = os.environ.get('DATABASE_TYPE', 'sqlite')
+DATABASE_PATH = os.environ.get('DATABASE_PATH', '.app-data/sqlite/support-bot.db')
 
 CHAT_ID = -1002447407837
 ANONYMOUS_MODE = False
