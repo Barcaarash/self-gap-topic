@@ -5,12 +5,12 @@ services:
   bot:
     build: .
     links: 
-      - mysql
       - redis
 
     volumes:
       - ./src:/support-bot/src
       - ./.app-data/telegram-session:/support-bot/.telegram-session
+      - ./.app-data/sqlite:/support-bot/.app-data/sqlite
 
     command: python3 src/main.py
 
@@ -18,19 +18,7 @@ services:
       - .env
 
     depends_on:
-      - mysql
       - redis
-
-  mysql:
-    image: "${MYSQL_ENGINE}:${MYSQL_VERSION}"
-    restart: always
-
-
-    env_file:
-      - .env
-  
-    volumes: 
-      - .app-data/mysql:/var/lib/mysql
   
   redis:
     image: "redis:${REDIS_VERSION}"
@@ -42,19 +30,3 @@ services:
     volumes:
       - .app-data/redis/dаta:/root/redis
       - .app-data/redis/redis.conf:/usr/local/etc/redis/redis.conf
-
-
-  phpmyadmin:
-    image: "phpmyadmin:${PMA_VERSION}"
-    restart: always
-
-    links: 
-      - mysql
-
-    ports:
-      - ${PMA_HTTP_PORT}:80
-
-    environment:
-      PMA_HOST: mysql
-
-
