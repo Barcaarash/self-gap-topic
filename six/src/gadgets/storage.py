@@ -1,22 +1,18 @@
 import time
+import os
 import config
 import peewee
 from datetime import datetime
 
-database = peewee.MySQLDatabase(config.MYSQL_DATABASE,
-                                user=config.MYSQL_USER,
-                                host=config.MYSQL_HOST,
-                                port=config.MYSQL_PORT,
-                                password=config.MYSQL_ROOT_PASSWORD)
+# Create directory for SQLite database
+os.makedirs('.app-data/sqlite', exist_ok=True)
 
-
-
+# Use SQLite database instead of MySQL
+database = peewee.SqliteDatabase('.app-data/sqlite/support-bot.db')
 
 class BaseModel(peewee.Model):
     class Meta:
         database = database
-
-
 
 class Users(BaseModel):
     id = peewee.AutoField()
@@ -53,4 +49,4 @@ for _ in range(10):
         break
 
 else:
-    exit(f'Unable to connect to {config.MYSQL_ENGINE} database ({config.MYSQL_HOST}:{config.MYSQL_PORT})')
+    exit('Unable to connect to SQLite database')
